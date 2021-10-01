@@ -52,10 +52,19 @@ select first_name, hire_date
  
 select first_name, hire_date
   from employees
- where hire_date between '1989-01-01' and '1989-12-31'
- order by hire_date;
+ where hire_date between '1989-01-01' and '1989-12-31';
+
+-- order by 절 #1
+-- 예제 : 남자 직원의 전체 이름, 성별, 입사일을 입사일 순(선임순)으로 출력
+select first_name, gender, hire_date
+  from employees
+ where gender = 'M'
+ order by hire_date asc;
   
-  
+-- 예제2 : 직원들의 사번, 월급을 사번, 월급순으로 출력
+select emp_no, salary, from_date, to_date
+  from salaries
+order by emp_no asc, salary desc;
   
   
   
