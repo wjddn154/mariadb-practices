@@ -2,6 +2,7 @@ package driver;
 
 import java.sql.Connection;
 import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
 import java.sql.SQLFeatureNotSupportedException;
@@ -11,13 +12,21 @@ import java.util.logging.Logger;
 public class MyDriver implements Driver {
 	
 	static {
-		System.out.println("static code area");
+		try {
+			System.out.println("static code area");
+			DriverManager.registerDriver(new MyDriver());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	@Override
 	public Connection connect(String url, Properties info) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("url" + url);
+		System.out.println("info" + info);
+		
+		return new MyConnection();
 	}
 
 	@Override
