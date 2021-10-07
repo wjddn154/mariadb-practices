@@ -4,6 +4,7 @@ select e.emp_no as '사번', concat(e.first_name, ' ', e.last_name) as '이름',
   from employees e
   join salaries s
     on e.emp_no = s.emp_no
+ where s.to_date = '9999-01-01'
 order by s.salary desc;
 
 -- 문제2.
@@ -12,6 +13,7 @@ select e.emp_no as '사번', concat(e.first_name, ' ', e.last_name) as '이름',
   from employees e
   join titles t
     on e.emp_no = t.emp_no
+ where t.to_date = '9999-01-01'
 order by e.first_name;
 
 -- 문제3.
@@ -22,6 +24,7 @@ select e.emp_no as '사번', concat(e.first_name, ' ', e.last_name) as '이름',
     on e.emp_no = de.emp_no
   join departments d
 	on de.dept_no = d.dept_no
+ where de.to_date = '9999-01-01'
 order by e.first_name;
 
 -- 문제4.
@@ -36,6 +39,9 @@ select e.emp_no as '사번', concat(e.first_name, ' ', e.last_name) as '이름',
     on e.emp_no = s.emp_no
   join titles t
     on e.emp_no = t.emp_no
+ where de.to_date = '9999-01-01'
+   and s.to_date = '9999-01-01'
+   and t.to_date = '9999-01-01'
 order by e.first_name;
 
 -- 문제5.
