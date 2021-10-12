@@ -9,17 +9,8 @@ public class AuthorDaoTest {
 
 	public static void main(String[] args) {
 		//insertTest();
-		findAllTest();
 	}
 	
-	
-	private static void findAllTest() {
-		List<AuthorVo> list = new AuthorDao().findAll();
-		for(AuthorVo vo : list) {
-			System.out.println(vo);
-		}
-		
-	}
 
 	private static void insertTest() {
 		AuthorVo vo = null;

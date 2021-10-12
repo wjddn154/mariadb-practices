@@ -78,7 +78,7 @@ public class CategoryDAO {
 			conn = getConnection();
 
 			// 3. SQL 준비
-			String sql = "update book set name=? where no=?";
+			String sql = "update category set name=? where no=?";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(binding)
@@ -110,8 +110,8 @@ public class CategoryDAO {
 		return result;
 	}
 
-						//파라미터부터 고치자 정우야
-	public boolean delete(CategoryVO vo) {
+						
+	public boolean delete(Long no) {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -124,7 +124,7 @@ public class CategoryDAO {
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(binding)
-			pstmt.setString(1, vo.getName());
+			pstmt.setLong(1, no);
 
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();
@@ -132,7 +132,7 @@ public class CategoryDAO {
 			result = count == 1;
 
 		} catch (SQLException e) {
-			System.out.println("CategoryDAO insert() 예외 발생 error:" + e);
+			System.out.println("CategoryDAO delete() 예외 발생 error:" + e);
 		} finally {
 
 			try {
@@ -162,7 +162,7 @@ public class CategoryDAO {
 			conn = getConnection();
 
 			// 3. SQL 준비
-			String sql = "select * from category";
+			String sql = "select no, name from category";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(binding)
@@ -182,7 +182,7 @@ public class CategoryDAO {
 			}
 
 		} catch (SQLException e) {
-			System.out.println("Book findAll() error:" + e);
+			System.out.println("Category findAll() error:" + e);
 		} finally {
 			// clean up
 			try {

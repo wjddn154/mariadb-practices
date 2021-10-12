@@ -8,9 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import bookmall.vo.CartVO;
+import bookmall.vo.MemberVO;
+import bookmall.vo.OrderBookVO;
 
-public class CartDAO {
+public class OrderBookDAO {
 
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
@@ -27,7 +28,7 @@ public class CartDAO {
 		return conn;
 	}
 	
-	public boolean insert(CartVO vo) {
+	public boolean insert(OrderBookVO vo) {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -36,13 +37,14 @@ public class CartDAO {
 			conn = getConnection();
 
 			// 3. SQL 준비
-			String sql = "insert into cart values(?, ?, ?)";
+			String sql = "insert into order_book values(?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(binding)
-			pstmt.setLong(1, vo.getQty());
-			pstmt.setLong(2, vo.getMemberNo());
-			pstmt.setLong(3, vo.getBookNo());
+			pstmt.setLong(1, vo.getOrderNo());
+			pstmt.setLong(2, vo.getBookNo());
+			pstmt.setLong(3, vo.getQty());
+			pstmt.setLong(4, vo.getPrice());
 
 			// 5. SQL 실행
 			int count = pstmt.executeUpdate();
@@ -50,7 +52,7 @@ public class CartDAO {
 			result = count == 1;
 
 		} catch (SQLException e) {
-			System.out.println("CartDAO insert() 예외 발생 error:" + e);
+			System.out.println("OrderBookDAO insert() 예외 발생 error:" + e);
 		} finally {
 
 			try {
@@ -68,9 +70,9 @@ public class CartDAO {
 
 		return result;
 	}
-	
-	public List<CartVO> findAll() {
-		List<CartVO> result = new ArrayList<>();
+
+	public List<OrderBookVO> findAll() {
+		List<OrderBookVO> result = new ArrayList<>();
 
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -80,7 +82,7 @@ public class CartDAO {
 			conn = getConnection();
 
 			// 3. SQL 준비
-			String sql = "select qty, member_no, book_no from cart";
+			String sql = "select order_no, book_no, qty, price from order_book order by order_no asc";
 			pstmt = conn.prepareStatement(sql);
 
 			// 4. 바인딩(binding)
@@ -89,20 +91,22 @@ public class CartDAO {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Long qty = rs.getLong(1);
-				Long memberNo = rs.getLong(2);
-				Long bookNo = rs.getLong(3);
+				Long orderNo = rs.getLong(1);
+				Long bookNo = rs.getLong(2);
+				Long qty = rs.getLong(3);
+				Long price = rs.getLong(4);
 
-				CartVO vo = new CartVO();
-				vo.setQty(qty);
-				vo.setMemberNo(memberNo);
+				OrderBookVO vo = new OrderBookVO();
+				vo.setOrderNo(orderNo);
 				vo.setBookNo(bookNo);
-
+				vo.setQty(qty);
+				vo.setPrice(price);
+				
 				result.add(vo);
 			}
 
 		} catch (SQLException e) {
-			System.out.println("CartDAO findAll() error:" + e);
+			System.out.println("OrderBookDAO findAll() error:" + e);
 		} finally {
 			// clean up
 			try {
@@ -125,5 +129,6 @@ public class CartDAO {
 
 		return result;
 	}
+	
 	
 }

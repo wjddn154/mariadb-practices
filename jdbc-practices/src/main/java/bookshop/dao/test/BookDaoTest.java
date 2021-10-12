@@ -7,10 +7,8 @@ public class BookDaoTest {
 
 	public static void main(String[] args) {
 		// insertTest();
-
 	}
 
-	
 	private static void insertTest() {
 		BookVo vo = null;
 		BookDao dao = new BookDao();
